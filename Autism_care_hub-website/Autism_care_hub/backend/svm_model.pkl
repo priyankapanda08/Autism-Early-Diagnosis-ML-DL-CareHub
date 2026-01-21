@@ -1,0 +1,44 @@
+!pip install scikit-learn pandas numpy joblib
+import pandas as pd
+import numpy as np
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import LabelEncoder
+from sklearn.svm import SVC
+from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
+import joblib
+# Replace with your actual path or upload file in Colab
+df = pd.read_csv('/content/drive/MyDrive/Autism_disorder/autism_data.csv')
+
+# Optional: Preview data
+df.head()
+# Encode categorical variables
+label_columns = ['Class/ASD Traits', 'Sex', 'Jaundice', 'Family_mem_with_ASD', 'Who completed the test']
+le = LabelEncoder()
+
+for col in label_columns:
+    df[col] = le.fit_transform(df[col])
+
+# Drop unnecessary columns
+df = df.drop(['ID'], axis=1, errors='ignore')  # remove ID if present
+# Target column: adjust if your dataset has a different label name
+X = df.drop('Class/ASD Traits', axis=1)
+y = df['Class/ASD Traits']
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=42
+)
+# Create and train the model
+svc = SVC(kernel='linear', probability=True)
+svc.fit(X_train, y_train)
+y_pred = svc.predict(X_test)
+
+print("Accuracy:", accuracy_score(y_test, y_pred))
+print("\nClassification Report:\n", classification_report(y_test, y_pred))
+print("\nConfusion Matrix:\n", confusion_matrix(y_test, y_pred))
+# Save model
+joblib.dump(svc, '/content/drive/MyDrive/Autism_disorder/svm_model.pkl')
+
+# Save selected features list
+joblib.dump(X.columns.tolist(), '/content/drive/MyDrive/Autism_disorder/selected_features.pkl')
+
+# Save label encoder (important for Flask decoding)
+joblib.dump(le, '/content/drive/MyDrive/Autism_disorder/label_encoder.pkl')

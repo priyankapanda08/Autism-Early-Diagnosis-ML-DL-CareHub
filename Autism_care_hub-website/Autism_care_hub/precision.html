@@ -1,0 +1,170 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>More Precision - Autism Screening</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+  <style>
+    body {
+      background: linear-gradient(120deg, #6b46c1, #eba7ec, #d6bcfa, #6db8e7);
+      background-size: 400% 400%;
+      animation: galaxyFlow 12s ease infinite;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    @keyframes galaxyFlow {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    main { flex: 1; }
+    .cloud-box {
+      background-color: rgba(255, 255, 255, 0.95);
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
+    }
+    .selected { background-color: #cbd5e0; }
+  </style>
+</head>
+<body>
+<header class="bg-gradient-to-r from-blue-400 to-blue-300 text-gray-800 sticky top-0 z-50 shadow-md">
+  <nav class="max-w-7xl mx-auto flex justify-between items-center py-4 px-6">
+    <div class="text-3xl font-bold tracking-wide">Autism Care Hub</div>
+    <div class="space-x-6 font-medium hidden md:flex">
+      <a href="index.html" class="hover:text-white">Home</a>
+      <a href="index.html#about" class="hover:text-white">About Us</a>
+      <a href="index.html#contact" class="hover:text-white">Contact Us</a>
+    </div>
+  </nav>
+  <!-- Disclaimer Bar -->
+  <div class="bg-yellow-200 text-sm text-gray-900 text-center py-2 px-4">
+    Disclaimer: This website is for informational purposes only and is not a medical diagnosis. Please consult a healthcare professional for concerns about autism.
+  </div>
+</header>
+<main class="flex justify-center items-center py-10 px-4">
+  <div class="cloud-box w-full max-w-2xl text-center">
+    <h1 class="text-3xl font-bold mb-6 text-purple-800">More Precision Screening</h1>
+    <div id="question-box">
+      <p id="question-text" class="text-xl font-semibold text-gray-700 mb-6"></p>
+      <div class="flex space-x-4 justify-center">
+        <button id="yes-btn" class="w-24 bg-green-600 text-white py-2 rounded hover:bg-green-700">Yes</button>
+        <button id="no-btn" class="w-24 bg-red-600 text-white py-2 rounded hover:bg-red-700">No</button>
+      </div>
+      <div class="mt-6 bg-purple-200 p-4 rounded-lg shadow-inner flex justify-between items-center">
+        <button id="prev-btn" class="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700 hidden">Previous</button>
+        <button id="next-btn" class="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700 hidden">Next</button>
+      </div>
+    </div>
+    <div id="loading" class="mt-6 text-purple-700 font-semibold hidden">Submitting your answers...</div>
+  </div>
+</main>
+<script>
+const moreQuestions = [
+  "Does the person lack a social smile?",
+  "Does the person remain aloof or self-absorbed?",
+  "Does the person fail to initiate or respond to social interaction?",
+  "Does the person not respond appropriately in social situations?",
+  "Does the person engage in only solitary or repetitive play?",
+  "Does the person fail to take turns during social interaction?",
+  "Does the person talk or smile to themselves with no context?",
+  "Does the person lack awareness of danger?",
+  "Does the person appear overly excited or agitated for no clear reason?",
+  "Does the person use the same phrase or sentence repeatedly?",
+  "Does the person make unusual sounds (e.g., squeals, babbling)?",
+  "Does the person use incorrect pronouns (e.g., 'you' for 'I')?",
+  "Does the person flap hands, rock body, or engage in repetitive movements?",
+  "Is the person overly attached to specific objects (e.g., toy, bottle)?",
+  "Does the person throw tantrums when frustrated?",
+  "Does the person harm themselves (e.g., head banging, biting)?",
+  "Does the person stare into space for long periods?",
+  "Does the person avoid tracking moving objects visually?",
+  "Does the person focus only on tiny details of objects?",
+  "Does the person not react to pain appropriately?",
+  "Does the person explore objects by smelling or licking them?",
+  "Does the person struggle to concentrate or stay on task?",
+  "Does the person take a long time to respond to questions or instructions?",
+  "Does the person show limited facial expressions during communication?",
+  "Does the person struggle with understanding body language?",
+  "Does the person respond negatively to being touched?",
+  "Does the person have difficulty understanding personal space?",
+  "Does the person engage in rituals or repetitive behaviors during play?",
+  "Does the person often lose track of time during focused activities?",
+  "Does the person exhibit difficulty transitioning between activities?"];
+  let current = 0;
+  let extraAnswers = [];
+
+  const questionText = document.getElementById("question-text");
+  const yesBtn = document.getElementById("yes-btn");
+  const noBtn = document.getElementById("no-btn");
+  const nextBtn = document.getElementById("next-btn");
+  const prevBtn = document.getElementById("prev-btn");
+  const loading = document.getElementById("loading");
+
+  function loadQuestion() {
+  questionText.textContent = `${current + 1}/${moreQuestions.length} ${moreQuestions[current]}`;
+  yesBtn.classList.remove("selected");
+  noBtn.classList.remove("selected");
+  if (extraAnswers[current] === "yes") yesBtn.classList.add("selected");
+  if (extraAnswers[current] === "no") noBtn.classList.add("selected");
+  prevBtn.style.display = current === 0 ? "none" : "inline-block";
+  nextBtn.style.display = extraAnswers[current] ? "inline-block" : "none";
+}
+
+
+    yesBtn.addEventListener("click", () => {
+        extraAnswers[current] = "yes";
+        yesBtn.classList.add("selected");
+        noBtn.classList.remove("selected");
+        nextBtn.style.display = "inline-block"; 
+    });
+
+    noBtn.addEventListener("click", () => {
+        extraAnswers[current] = "no";
+        noBtn.classList.add("selected");
+        yesBtn.classList.remove("selected");
+        nextBtn.style.display = "inline-block"; 
+    });
+
+    nextBtn.addEventListener("click", () => {
+      if (current < moreQuestions.length - 1) {
+        current++;
+        loadQuestion();
+      } else {
+        submitAllAnswers();
+      }
+    });
+
+  prevBtn.addEventListener("click", () => {
+    if (current > 0) {
+      current--;
+      loadQuestion();
+    }
+  });
+
+  function submitAllAnswers() {
+  loading.classList.remove("hidden");
+  const baseAnswers = JSON.parse(localStorage.getItem("initial_answers")) || [];
+  const allAnswers = baseAnswers.concat(extraAnswers);
+
+  axios.post('http://localhost:5000/save-screening', {
+    stage: 'full',
+    all_answers: allAnswers
+  })
+  .then(response => {
+    loading.classList.add("hidden");
+    console.log('All answers submitted:', response.data);
+    localStorage.setItem("allAnswers", JSON.stringify(allAnswers)); 
+    window.location.href = "result.html";
+  })
+  .catch(error => {
+    loading.classList.add("hidden");
+    console.error('Error submitting all answers:', error);
+    alert("There was an error submitting all answers. Please try again.");
+  });
+}
+  loadQuestion();
+</script>
+</body>
+</html>

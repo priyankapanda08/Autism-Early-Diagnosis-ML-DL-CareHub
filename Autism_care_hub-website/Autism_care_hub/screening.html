@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Autism Care Hub - Basic Information</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <style>
+    body {
+      background: linear-gradient(120deg, #6b46c1, #eba7ec, #d6bcfa, #6db8e7);
+      background-size: 400% 400%;
+      animation: galaxyFlow 12s ease infinite;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    @keyframes galaxyFlow {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .cloud-bg {
+      background-color: rgba(255, 255, 255, 0.85);
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .progress-bar {
+      height: 8px;
+      width: 100%;
+      background-color: #e5e7eb;
+      border-radius: 5px;
+      margin-bottom: 20px;
+      overflow: hidden;
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #4d21b5, #917cbb, #d6bcfa, #1c0e3b);
+      background-size: 400% 400%;
+      animation: galaxyFlow 6s ease infinite;
+      border-radius: 5px;
+      width: 0%;
+      transition: width 0.4s ease-in-out;
+    }
+
+    .selected-answer {
+      background-color: #a0aec0 !important;
+    }
+
+    main {
+      flex: 1;
+    }
+  </style>
+</head>
+<body>
+
+  <header class="bg-gradient-to-r from-blue-400 to-blue-300 text-gray-800 sticky top-0 z-50 shadow-md">
+    <nav class="max-w-7xl mx-auto flex justify-between items-center py-4 px-6">
+      <div class="text-3xl font-bold tracking-wide">Autism Care Hub</div>
+      <div class="space-x-6 font-medium hidden md:flex">
+        <a href="index.html" class="hover:text-white">Home</a>
+        <a href="index.html#about" class="hover:text-white">About Us</a>
+        <a href="index.html#contact" class="hover:text-white">Contact Us</a>
+      </div>
+    </nav>
+    <!-- Disclaimer Bar -->
+    <div class="bg-yellow-200 text-sm text-gray-900 text-center py-2 px-4">
+      Disclaimer: This website is for informational purposes only and is not a medical diagnosis. Please consult a healthcare professional for concerns about autism.
+    </div>
+  </header>
+
+  <main class="flex justify-center items-center py-10 px-4">
+    <div id="screening" class="cloud-bg w-full max-w-2xl p-8">
+      <h1 class="text-3xl font-bold mb-8 text-center text-purple-800">Autism Care Hub - Basic Information</h1>
+
+      <div class="progress-bar mb-4">
+        <div id="progress-bar-fill" class="progress-bar-fill"></div>
+      </div>
+
+      <div id="age-form" class="mb-6">
+        <label class="block font-semibold mb-2 text-gray-700">Enter your age</label>
+        <input type="number" id="age" class="w-full border border-gray-300 p-3 rounded-lg focus:ring-2 focus:ring-purple-400" required placeholder="Enter your age" min="1" max="100" />
+        <button id="next-age-btn" class="mt-4 w-full bg-purple-600 text-white py-3 rounded-lg hover:bg-purple-700 font-semibold">Next</button>
+      </div>
+
+      <div id="screening-info" class="hidden mb-6">
+        <p id="screening-message" class="text-xl text-center text-gray-700 mb-4"></p>
+        <button id="start-screening-btn" class="w-full bg-purple-600 text-white py-3 rounded-lg hover:bg-purple-700 font-semibold">Start Screening</button>
+      </div>
+
+      <form id="screening-form" class="space-y-6 hidden">
+        <h2 id="screening-title" class="text-2xl font-bold text-center text-purple-800 mb-4"></h2>
+        <div id="questions-container"></div>
+        <div class="flex justify-between">
+          <button type="button" id="prev-btn" class="w-1/3 bg-purple-600 text-white py-2 rounded-lg hover:bg-purple-700 hidden">Previous</button>
+          <button type="button" id="next-btn" class="w-1/3 bg-purple-600 text-white py-2 rounded-lg hover:bg-purple-700 hidden">Next</button>
+        </div>
+      </form>
+
+      <div id="loading" class="text-center mt-6 hidden text-purple-700 font-semibold">Processing...</div>
+    </div>
+  </main>
+
+  <footer id="contact" class="bg-gray-900 text-white py-6 px-6 text-center text-sm">
+    <div class="max-w-7xl mx-auto">
+      <p class="mb-2">Quick Links:
+        <a href="#" class="text-gray-400 hover:text-white mx-1">Home</a> |
+        <a href="#resources" class="text-gray-400 hover:text-white mx-1">Resources</a>
+      </p>
+      <p>Email: <a href="mailto:trixietriesit247@gmail.com" class="hover:text-white underline">support@autismcarehub.com</a></p>
+      <p class="italic mt-2">"Every person deserves to be seen, heard, and supported."</p>
+      <p class="text-gray-500 mt-1">&copy; 2025 Autism Care Hub</p>
+    </div>
+  </footer>
+
+  <script>
+    const ageInput = document.getElementById('age');
+    const nextAgeBtn = document.getElementById('next-age-btn');
+    const screeningInfoDiv = document.getElementById('screening-info');
+    const screeningMessage = document.getElementById('screening-message');
+    const startScreeningBtn = document.getElementById('start-screening-btn');
+    const form = document.getElementById('screening-form');
+    const screeningTitle = document.getElementById('screening-title');
+    const questionsContainer = document.getElementById('questions-container');
+    const progressBarFill = document.getElementById('progress-bar-fill');
+    const prevBtn = document.getElementById('prev-btn');
+    const nextBtn = document.getElementById('next-btn');
+    const loadingDiv = document.getElementById('loading');
+
+    const childQuestions = [
+      "Does the child speak very little and give unrelated answers to questions?",
+      "Does the child not respond to their name or avoid eye contact?",
+      "Does the child not engage in games of pretend with other children?",
+      "Does the child struggle to understand other people's feelings?",
+      "Is the child easily upset by small changes?",
+      "Does the child have obsessive interests?",
+      "Is the child over or under-sensitive to smells, tastes, or touch?",
+      "Does the child struggle to socialize with other children?",
+      "Does the child avoid physical contact?",
+      "Does the child show little awareness of dangerous situations?"
+    ];
+
+
+    const adultQuestions = [
+      "Do you find social interactions confusing or overwhelming?",
+      "Do you avoid eye contact or find it uncomfortable?",
+      "Do you prefer routines and feel distressed when they are disrupted?",
+      "Do you find it difficult to understand other people's emotions or reactions?",
+      "Do you have intense interests in specific topics?",
+      "Do you find it challenging to make or maintain friendships?",
+      "Are you highly sensitive to lights, sounds, smells, or textures?",
+      "Do you often miss social cues such as body language or tone of voice?",
+      "Do you feel the need to rehearse conversations in advance?",
+      "Have others commented that you seem blunt or direct in conversations?"
+    ];
+
+
+    let currentQuestionIndex = 0;
+    let selectedAnswers = [];
+    let questions = [];
+
+    nextAgeBtn.addEventListener('click', () => {
+      const age = parseInt(ageInput.value);
+      if (isNaN(age) || age < 1 || age > 100) {
+        alert('Please enter a valid age between 1 and 100.');
+        return;
+      }
+
+      screeningMessage.textContent = age < 18 ? "Child ASD screening tool enabled." : "Adult ASD screening tool enabled.";
+      screeningInfoDiv.classList.remove('hidden');
+      nextAgeBtn.classList.add('hidden');
+      ageInput.disabled = true;
+    });
+
+    startScreeningBtn.addEventListener('click', () => {
+      const age = parseInt(ageInput.value);
+      questions = age < 18 ? childQuestions : adultQuestions;
+      screeningTitle.textContent = age < 18 ? "Screening for Autism - Child" : "Screening for Autism - Adult";
+      document.getElementById('age-form').classList.add('hidden');
+      screeningInfoDiv.classList.add('hidden');
+      form.classList.remove('hidden');
+      currentQuestionIndex = 0;
+      selectedAnswers = [];
+      loadQuestion();
+    });
+
+    function loadQuestion() {
+      if (currentQuestionIndex >= questions.length) {
+        submitForm();
+        return;
+      }
+
+      const previousAnswer = selectedAnswers[currentQuestionIndex];
+      questionsContainer.innerHTML = `
+        <label class="font-medium text-blue-700 mb-4 block">${currentQuestionIndex + 1}. ${questions[currentQuestionIndex]}</label>
+        <div class="flex space-x-4">
+          <button type="button" id="yes-btn" class="w-1/2 bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 ${previousAnswer === 'yes' ? 'selected-answer' : ''}">Yes</button>
+          <button type="button" id="no-btn" class="w-1/2 bg-red-600 text-white py-2 rounded-lg hover:bg-red-700 ${previousAnswer === 'no' ? 'selected-answer' : ''}">No</button>
+        </div>
+      `;
+
+      document.getElementById('yes-btn').addEventListener('click', () => selectAnswer('yes'));
+      document.getElementById('no-btn').addEventListener('click', () => selectAnswer('no'));
+
+      progressBarFill.style.width = `${(currentQuestionIndex / questions.length) * 100}%`;
+      prevBtn.style.display = currentQuestionIndex === 0 ? 'none' : 'inline-block';
+      nextBtn.style.display = previousAnswer ? 'inline-block' : 'none';
+    }
+
+    function selectAnswer(answer) {
+      selectedAnswers[currentQuestionIndex] = answer;
+      nextBtn.style.display = 'inline-block';
+
+
+      document.getElementById('yes-btn').classList.remove('selected-answer');
+      document.getElementById('no-btn').classList.remove('selected-answer');
+
+      if (answer === 'yes') {
+        document.getElementById('yes-btn').classList.add('selected-answer');
+      } else {
+        document.getElementById('no-btn').classList.add('selected-answer');
+      }
+    }
+
+    prevBtn.addEventListener('click', () => {
+      if (currentQuestionIndex > 0) {
+        currentQuestionIndex--;
+        loadQuestion();
+      }
+    });
+
+    nextBtn.addEventListener('click', () => {
+      currentQuestionIndex++;
+      loadQuestion();
+    });
+
+    function submitForm() {
+  loadingDiv.classList.remove('hidden');
+  const age = parseInt(ageInput.value);
+  const testResult = selectedAnswers.filter(answer => answer === 'yes').length;
+  const timestamp = new Date().toISOString();
+
+  const userInfo = JSON.parse(localStorage.getItem('userInfo')) || {};
+  const name = userInfo.name || "User"; 
+  const gender = userInfo.gender || "Unknown"; 
+  const ethnicity = userInfo.ethnicity || "Unknown"; 
+
+  axios.post('http://localhost:5000/save-screening', {
+    stage: 'initial', 
+    name: name,
+    gender: gender,
+    ethnicity: ethnicity,
+    age: age,
+    initial_answers: selectedAnswers, 
+    test_result: testResult,
+    timestamp: timestamp
+  })
+  .then(response => {
+    loadingDiv.classList.add('hidden');
+    console.log('Initial data saved:', response.data);
+    localStorage.setItem("initial_answers", JSON.stringify(selectedAnswers)); 
+    window.location.href = 'result.html'; 
+  })
+  .catch(error => {
+    loadingDiv.classList.add('hidden');
+    console.error('Error saving initial data:', error);
+    alert("There was an error saving the initial data. Please try again.");
+  });
+}
+  </script>
+</body>
+</html>

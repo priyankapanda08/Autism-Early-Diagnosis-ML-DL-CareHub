@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Basic Info - Autism Care Hub</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background-color: #f0f9ff;
+      font-family: 'Poppins', 'Quicksand', sans-serif;
+    }
+    .sticky {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+  </style>
+</head>
+
+<body class="text-gray-800">
+
+  <!-- Header -->
+  <header class="bg-gradient-to-r from-blue-400 to-blue-300 text-gray-800 sticky shadow-md">
+    <nav class="max-w-7xl mx-auto flex justify-between items-center py-4 px-6">
+      <div class="text-3xl font-bold tracking-wide">Autism Care Hub</div>
+      <div class="space-x-6 font-medium hidden md:flex">
+        <a href="index.html" class="hover:text-white">Home</a>
+        <a href="index.html#about" class="hover:text-white">About Us</a>
+        <a href="index.html#early-diagnosis" class="hover:text-white">Early Diagnosis</a>
+        <a href="index.html#resources" class="hover:text-white">Resources</a>
+        <a href="index.html#contact" class="hover:text-white">Contact Us</a>
+      </div>
+    </nav>
+    <!-- Disclaimer Bar -->
+    <div class="bg-yellow-200 text-sm text-gray-900 text-center py-2 px-4">
+      Disclaimer: This website is for informational purposes only and is not a medical diagnosis. Please consult a healthcare professional for concerns about autism.
+    </div>
+  </header>
+
+  <!-- Hero Section with Wave -->
+  <section class="relative w-full overflow-hidden">
+    <div class="w-full h-72 md:h-96">
+      <img src="images/vision.jpg" alt="Vision Image" class="w-full h-full object-cover">
+    </div>
+    <div class="absolute bottom-0 left-0 w-full overflow-hidden leading-[0]">
+      <svg class="relative block w-full h-20 md:h-32" viewBox="0 0 1440 320" preserveAspectRatio="none">
+        <path fill="#f0f9ff" d="M0,192L48,170.7C96,149,192,107,288,90.7C384,75,480,85,576,117.3C672,149,768,203,864,229.3C960,256,1056,256,1152,218.7C1248,181,1344,107,1392,69.3L1440,32V320H0V192Z"></path>
+      </svg>
+    </div>
+  </section>
+
+  <!-- Basic Info Form -->
+  <section class="flex flex-col items-center justify-center py-12 px-6">
+    <div class="bg-white shadow-lg rounded-2xl p-8 w-full max-w-md">
+      <h2 class="text-2xl md:text-3xl font-bold text-center text-blue-500 mb-6">Enter Basic Details</h2>
+      <form id="basic-info-form" class="flex flex-col gap-5">
+        <input type="text" placeholder="Full Name" name="name" required class="p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-300 focus:outline-none">
+
+        <select name="gender" required class="p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-300 focus:outline-none">
+          <option value="">Select Gender</option>
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+          <option value="Others">Others</option>
+        </select>
+
+        <select name="ethnicity" required class="p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-300 focus:outline-none">
+          <option value="">Select Ethnicity</option>
+          <option value="Asian">Asian</option>
+          <option value="African">African</option>
+          <option value="Europian">Europian</option>
+          <option value="Latino">Latino</option>
+          <option value="Native American">Native American</option>
+          <option value="Pacific Islander">Pacific Islander</option>
+          <option value="Middle Eastern">Middle Eastern</option>
+          <option value="Mixed">Mixed</option>
+          <option value="Others">Others</option>
+        </select>
+
+        <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 rounded-lg transition duration-300">Proceed to Screening</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-gradient-to-r from-blue-400 to-blue-300 text-gray-800 py-8">
+    <div class="max-w-7xl mx-auto text-center">
+      <p class="text-lg font-semibold mb-2">Contact Us</p>
+      <p>Email: <a href="mailto:trixietriesit247@gmail.com" class="hover:text-white underline">support@autismcarehub.com</a></p>
+      <p class="mt-4 text-sm">&copy; 2025 Autism Care Hub.</p>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('basic-info-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const formData = new FormData(this);
+      const userInfo = {};
+      formData.forEach((value, key) => {
+        userInfo[key] = value;
+      });
+      localStorage.setItem('userInfo', JSON.stringify(userInfo));
+      window.location.href = 'screening.html';
+    });
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Autism Care Hub</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="Autism_care_hub/about_us.css">
+  <!-- Leaflet CSS & JS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+  <style>
+    body {
+      font-family: 'Poppins', 'Quicksand', sans-serif;
+    }
+
+    .sticky {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+
+    .hover-scale-120 {
+      transition: transform 0.3s ease-in-out;
+    }
+
+    .hover-scale-120:hover {
+      transform: scale(1.2);
+      z-index: 10;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes popIn {
+      from { opacity: 0; transform: scale(0.5); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    @keyframes slideInLeft {
+      from { opacity: 0; transform: translateX(-20px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .fade-in { animation: fadeIn 1s ease-out; }
+    .pop-in { animation: popIn 1s ease-out; }
+    .slide-in-left { animation: slideInLeft 1s ease-out; }
+    .fade-up { animation: fadeUp 1s ease-out; }
+  </style>
+</head>
+
+<body class="bg-gray-50">
+
+<!-- Header -->
+<header class="bg-blue-300 text-gray-800 sticky top-0 z-50 shadow-md">
+  <nav class="max-w-7xl mx-auto flex justify-between items-center py-4 px-6">
+    <div class="text-2xl font-semibold fade-in">Autism Care Hub</div>
+    <div class="space-x-4">
+      <a href="index.html" class="hover:text-blue-700 font-semibold">Home</a>
+      <a href="index.html#about" class="hover:text-blue-700 font-semibold">About Us</a>
+      <a href="index.html#early-diagnosis" class="hover:text-blue-700 font-semibold">Early Diagnosis</a>
+      <a href="index.html#resources" class="hover:text-blue-700 font-semibold">Resources</a>
+      <a href="index.html#contact" class="hover:text-blue-700 font-semibold">Contact Us</a>
+      <a href="faq.html" class="hover:text-blue-700 font-semibold">FAQ</a>
+    </div>
+  </nav>
+  <!-- Disclaimer Bar -->
+  <div class="bg-yellow-200 text-sm text-gray-900 text-center py-2 px-4">
+    Disclaimer: This website is for informational purposes only and is not a medical diagnosis. Please consult a healthcare professional for concerns about autism.
+  </div>
+</header>
+
+  <!-- Hero Section -->
+  <section class="text-center py-32 px-6" style="background-image: url('images/autism.jpg'); background-size: cover; background-position: center;">
+    <div class="bg-black bg-opacity-50 py-32 px-6">
+      <h1 class="text-5xl font-bold mb-6 pop-in text-white">Empowering Early Autism Care and Support</h1>
+      <p class="text-xl mb-8 fade-in text-white">Join a caring community dedicated to early diagnosis, support strategies, and building brighter futures for individuals with autism.</p>
+      <div class="space-x-4">
+        <a href="basic_info.html" class="bg-blue-500 hover:bg-blue-600 text-white py-3 px-6 rounded-lg">Start Your Journey</a>
+        <a href="#about" class="bg-green-400 hover:bg-green-500 text-white py-3 px-6 rounded-lg">Learn More About Us</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Us -->
+  <section id="about" class="py-20 relative overflow-hidden">
+    <svg class="absolute top-0 left-0 w-full h-full" viewBox="0 0 1440 320" preserveAspectRatio="none">
+      <path fill="url(#cloudGradient)" d="M0,256L30,245.3C60,235,120,213,180,202.7C240,192,300,192,360,186.7C420,181,480,171,540,160C600,149,660,139,720,160C780,181,840,235,900,245.3C960,256,1020,224,1080,202.7C1140,181,1200,171,1260,160C1320,149,1380,139,1410,133.3L1440,128L1440,320L1410,320C1380,320,1320,320,1260,320C1200,320,1140,320,1080,320C1020,320,960,320,900,320C840,320,780,320,720,320C660,320,600,320,540,320C480,320,420,320,360,320C300,320,240,320,180,320C120,320,60,320,30,320H0Z"></path>
+      <defs>
+        <linearGradient id="cloudGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" style="stop-color: #f0e5ff; stop-opacity: 1" />
+          <stop offset="100%" style="stop-color: #d1c4e9; stop-opacity: 1" />
+        </linearGradient>
+      </defs>
+    </svg>
+
+    <div class="relative z-10 max-w-7xl mx-auto text-center px-6 fade-in">
+      <h2 class="text-4xl font-bold mb-6 pop-in">About Us</h2>
+      <p class="text-lg mb-12 text-justify">
+        At Autism Care Hub, we are committed to early diagnosis, compassionate care, and empowering individuals on the autism spectrum to lead fulfilling lives. We believe that awareness and timely intervention can transform futures.
+      </p>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mx-auto justify-items-center fade-up">
+        <div class="hover-scale-120 bg-gradient-to-r from-pink-100 to-peach-100 shadow-md p-6 rounded-lg flex flex-col items-center border border-gray-300 pop-in w-full max-w-md">
+          <img src="images/mission.jpg" alt="Mission Image" class="w-full h-64 object-cover rounded-md mb-4">
+          <h2 class="text-xl font-semibold text-center mb-2">Mission</h2>
+          <p class="flex-grow text-center text-justify">Our mission is to support families with trusted resources, expert insights, and community-driven support. We aim to create accessible screening tools.</p>
+        </div>
+
+        <div class="hover-scale-120 bg-gradient-to-r from-blue-200 via-indigo-200 to-purple-200 shadow-md p-6 rounded-lg flex flex-col items-center border border-gray-300 pop-in w-full max-w-md">
+          <img src="images/vision.jpg" alt="Vision Image" class="w-full h-64 object-cover rounded-md mb-4">
+          <h2 class="text-xl font-semibold text-center mb-2">Vision</h2>
+          <p class="flex-grow text-center text-justify">Cultivate a culture of intellectual inquiry and innovative thinking about Autism and other Developmental Delays.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Early Diagnosis -->
+  <section id="early-diagnosis" class="relative overflow-hidden py-20 text-center px-6">
+    <svg class="absolute top-0 left-0 w-full h-full" viewBox="0 0 1440 320" preserveAspectRatio="none">
+      <path fill="url(#waveGradient)" d="M0,128L30,144C60,160,120,192,180,202.7C240,213,300,203,360,186.7C420,171,480,149,540,128C600,107,660,85,720,96C780,107,840,149,900,170.7C960,192,1020,192,1080,186.7C1140,181,1200,171,1260,160C1320,149,1380,139,1410,133.3L1440,128L1440,320L1410,320C1380,320,1320,320,1260,320C1200,320,1140,320,1080,320C1020,320,960,320,900,320C840,320,780,320,720,320C660,320,600,320,540,320C480,320,420,320,360,320C300,320,240,320,180,320C120,320,60,320,30,320H0Z"></path>
+      <defs>
+        <linearGradient id="waveGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" style="stop-color: #a0d3e8; stop-opacity: 1" />
+          <stop offset="100%" style="stop-color: #3b82f6; stop-opacity: 1" />
+        </linearGradient>
+      </defs>
+    </svg>
+
+    <div class="relative z-10 max-w-4xl mx-auto fade-in">
+      <h2 class="text-4xl font-bold mb-8 pop-in">Why Early Diagnosis Matters</h2>
+      <p class="text-lg mb-6">Early identification of autism spectrum disorder can unlock vital early interventions, therapies, and support strategies.</p>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div class="bg-white shadow-md p-6 rounded-lg fade-up">
+          <h3 class="text-2xl font-semibold mb-2 pop-in">Signs to Watch 👀</h3>
+          <ul class="text-left list-disc list-inside">
+            <li>Limited eye contact</li>
+            <li>Delayed speech</li>
+            <li>Repetitive behaviors</li>
+            <li>Preference for being alone</li>
+          </ul>
+        </div>
+        <div class="bg-white shadow-md p-6 rounded-lg fade-up">
+          <h3 class="text-2xl font-semibold mb-2 pop-in">Screening Tools 🧠</h3>
+          <p class="mb-4">Take our preliminary autism screening questionnaire to better understand early signs.</p>
+          <a href="basic_info.html" class="bg-purple-500 hover:bg-purple-600 text-white py-2 px-4 rounded">Access Screening Tools</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+<!-- Locate Nearby Care Section -->
+<section id="locate-care" class="py-20 px-6 bg-blue-50 text-center fade-in">
+  <div class="max-w-5xl mx-auto">
+    <h2 class="text-4xl font-bold mb-6 pop-in">Locate Nearby Care</h2>
+    <p class="mb-8 text-lg text-gray-700">Find autism care centers, specialists, or support groups near your location.</p>
+    <div id="map" class="w-full h-96 rounded-xl shadow-lg"></div>
+  </div>
+</section>
+
+<!-- Resources -->
+<section id="resources" class="max-w-7xl mx-auto text-center py-20 px-6 bg-gradient-to-r from-purple-100 via-pink-100 to-yellow-100 fade-in">
+  <h2 class="text-4xl font-bold mb-10 slide-in-left">Support and Resources</h2>
+
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-left">
+    
+    <!-- Articles & Guides -->
+    <div class="bg-cyan rounded-2xl shadow-xl p-8 transform transition hover:scale-105 hover:shadow-2xl duration-300 animate-fade-in-up">
+      <h3 class="text-2xl font-bold text-black-700 mb-4">📚 Articles & Guides</h3>
+      <ul class="list-disc list-inside text-left space-y-2 text-gray-700">
+        <li><a href="https://www.autismspeaks.org/family-services/tool-kits" target="_blank" class="text-black-600 hover:text-blue-800 transition">Parenting Tips for Children with Autism</a></li>
+        <li><a href="https://www.autismspeaks.org/what-autism" target="_blank" class="text-black-600 hover:text-blue-800 transition">Understanding Autism – Beginner's Guide</a></li>
+        <li><a href="https://foodforthebrain.org/autism/" target="_blank" class="text-black-600 hover:text-blue-800 transition">Diet & Nutrition for Kids with Autism</a></li>
+        <li><a href="https://www.autismspeaks.org/sensory-issues" target="_blank" class="text-black-600 hover:text-blue-800 transition">Managing Sensory Overload</a></li>
+        <li><a href="https://health.vikaspedia.in/viewcontent/health/mental-health/autism-1/autismgovernment-schemes-and-programmes" target="_blank" class="text-black-600 hover:text-blue-800 transition">Government Schemes – India</a></li>
+      </ul>
+    </div>
+
+    <!-- Videos -->
+    <div class="bg-cyan rounded-2xl shadow-xl p-8 transform transition hover:scale-105 hover:shadow-2xl duration-300 animate-fade-in-up">
+      <h3 class="text-2xl font-semibold mb-4 pop-in">🎥 Videos</h3>
+
+      <!-- Main embedded video -->
+      <div class="mb-4">
+        <iframe width="100%" height="315" src="https://www.youtube.com/embed/j3PrAqJ-H9k" frameborder="0" allowfullscreen class="rounded-md shadow"></iframe>
+        <p class="text-sm text-gray-600 mt-2">What is Autism? (Animated Explainer)</p>
+      </div>
+
+      <!-- Toggle button -->
+      <button onclick="toggleMoreVideos()" class="mt-2 text-black-600 hover:text-black-800 text-sm flex items-center">
+        ▶️ More Videos
+      </button>
+
+      <!-- Hidden extra embedded videos -->
+      <div id="more-videos" class="hidden mt-4 space-y-4">
+        <div>
+          <iframe width="100%" height="315" src="https://www.youtube.com/embed/WRRF4NZB3WQ" frameborder="0" allowfullscreen class="rounded-md shadow"></iframe>
+          <p class="text-sm text-gray-600 mt-2">Early Signs of Autism – Visual Guide</p>
+        </div>
+        <div>
+          <iframe width="100%" height="315" src="https://www.youtube.com/embed/M3ahgPWYhGo" frameborder="0" allowfullscreen class="rounded-md shadow"></iframe>
+          <p class="text-sm text-gray-600 mt-2">Day in the Life: A Child with Autism</p>
+        </div>
+        <div>
+          <iframe width="100%" height="315" src="https://www.youtube.com/embed/pSGVb60-BSw" frameborder="0" allowfullscreen class="rounded-md shadow"></iframe>
+          <p class="text-sm text-gray-600 mt-2">Behavior Therapy Demonstration</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Community Support -->
+    <div class="bg-cyan rounded-2xl shadow-xl p-8 transform transition hover:scale-105 hover:shadow-2xl duration-300 animate-fade-in-up">
+      <h3 class="text-2xl font-semibold mb-2 pop-in">🤝 Community Support</h3>
+      <p>Join trusted support groups and connect with other families.</p>
+      <p> </p>
+      <a href="https://www.indiaautismcenter.org/" class="text-red-500 hover:text-blue-700" target="_blank">Visit India Autism Center</a>
+      <img src="images/Support.jpg" alt="Support Image" class="mt-4 w-full h-48 object-cover rounded-md shadow">
+    </div>
+
+  </div>
+
+  <a href="faq.html" class="mt-8 inline-block bg-green-500 hover:bg-green-600 text-white py-3 px-6 rounded-lg">FAQ</a>
+</section>
+
+<!-- Toggle Script -->
+<script>
+  function toggleMoreVideos() {
+    const section = document.getElementById("more-videos");
+    section.classList.toggle("hidden");
+  }
+</script>
+
+<script>
+  const map = L.map('map').setView([11.0168, 76.9558], 7); // Default center: Coimbatore
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; OpenStreetMap contributors'
+  }).addTo(map);
+
+  const autismCenters = [
+    {
+      name: "Sristi Foundation",
+      lat: 11.0173,
+      lng: 76.9582,
+      address: "Puliakulam Road, Coimbatore"
+    },
+    {
+      name: "Kaumaram Prashanthi Academy",
+      lat: 11.0197,
+      lng: 76.9513,
+      address: "Sowripalayam, Coimbatore"
+    },
+    {
+      name: "Mahalir Nilayam Therapy Center",
+      lat: 11.0355,
+      lng: 77.0127,
+      address: "Peelamedu, Coimbatore"
+    },
+    {
+      name: "Mind Zone – Autism Treatment Center",
+      lat: 11.0154,
+      lng: 76.9740,
+      address: "Ramanathapuram, Coimbatore"
+    },
+    {
+      name: "We Care Autism Centre",
+      lat: 11.0219,
+      lng: 76.9422,
+      address: "Gandhipuram, Coimbatore"
+    },
+    {
+      name: "Swasthi Special School",
+      lat: 11.0115,
+      lng: 76.9551,
+      address: "Ukkadam, Coimbatore"
+    },
+    {
+      name: "Ummees Child Development Center",
+      lat: 11.0281,
+      lng: 76.9693,
+      address: "Singanallur, Coimbatore"
+    },
+    {
+      name: "Tamahar Autism Center",
+      lat: 12.9558,
+      lng: 80.1428,
+      address: "Velachery, Chennai"
+    },
+    {
+      name: "Hearts for Autism",
+      lat: 13.0827,
+      lng: 80.2707,
+      address: "Egmore, Chennai"
+    },
+    {
+      name: "SPASTN – The Spastics Society of Tamil Nadu",
+      lat: 13.0012,
+      lng: 80.2563,
+      address: "Taramani, Chennai"
+    },
+    {
+      name: "Athma Mind Center",
+      lat: 11.6517,
+      lng: 78.1571,
+      address: "Salem"
+    },
+    {
+      name: "AIM Autism Intervention and Management",
+      lat: 11.4134,
+      lng: 79.6957,
+      address: "Villupuram"
+    },
+    {
+      name: "Minds Center for Autism",
+      lat: 9.9252,
+      lng: 78.1198,
+      address: "Madurai"
+    }
+  ];
+
+  autismCenters.forEach(center => {
+    L.marker([center.lat, center.lng])
+      .addTo(map)
+      .bindPopup(`<strong>${center.name}</strong><br>${center.address}`);
+  });
+
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(position => {
+      const userLat = position.coords.latitude;
+      const userLng = position.coords.longitude;
+
+      map.setView([userLat, userLng], 13);
+      L.marker([userLat, userLng])
+        .addTo(map)
+        .bindPopup("You are here")
+        .openPopup();
+    }, () => {
+      console.log("Location access denied. Using default map view.");
+    });
+  } else {
+    console.log("Geolocation is not supported by this browser.");
+  }
+</script>
+
+
+<footer id="contact" class="bg-gray-900 text-white py-8 px-6">
+  <div class="max-w-7xl mx-auto text-center">
+    <div class="mb-4">
+      <p>Quick Links:</p>
+      <a href="#" class="text-gray-400 hover:text-white mx-2">Home</a> |
+      <a href="#about" class="text-gray-400 hover:text-white mx-2">About Us</a> |
+      <a href="#early-diagnosis" class="text-gray-400 hover:text-white mx-2">Early Diagnosis</a> |
+      <a href="#resources" class="text-gray-400 hover:text-white mx-2">Resources</a> |
+      <a href="#contact" class="text-gray-400 hover:text-white mx-2">Contact Us</a>
+    </div>
+    
+    <p>
+      Email:
+      <a href="mailto:trixietriesit247@gmail.com" class="text-blue-400 hover:underline">
+        support@autismcarehub.com
+      </a>
+    </p>
+
+    <div class="flex justify-center mt-4 space-x-4">
+      <a href="https://linktr.ee/trixietriesit" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white">
+        LinkedIn
+      </a>
+    </div>
+
+    <p class="mt-6 italic">"Every person deserves to be seen, heard, and supported."</p>
+    <p class="mt-2 text-gray-500">&copy; 2025 Autism Care Hub.</p>
+  </div>
+</footer>
+
+
+  <script>
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+          behavior: 'smooth'
+        });
+      });
+    });
+  </script>
+
+</body>
+
+</html>

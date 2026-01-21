@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Screening Result - Autism Care Hub</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+  <style>
+    body {
+      background: linear-gradient(120deg, #6b46c1, #eba7ec, #d6bcfa, #6db8e7);
+      background-size: 400% 400%;
+      animation: galaxyFlow 12s ease infinite;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    @keyframes galaxyFlow {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    main {
+      flex: 1;
+    }
+
+    .result-box {
+      background-color: rgba(255, 255, 255, 0.95);
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
+    }
+  </style>
+</head>
+<body>
+
+  <header class="bg-gradient-to-r from-blue-400 to-blue-300 text-gray-800 sticky top-0 z-50 shadow-md">
+    <nav class="max-w-7xl mx-auto flex justify-between items-center py-4 px-6">
+      <div class="text-3xl font-bold tracking-wide">Autism Care Hub</div>
+      <div class="space-x-6 font-medium hidden md:flex">
+        <a href="index.html" class="hover:text-white">Home</a>
+        <a href="index.html#about" class="hover:text-white">About Us</a>
+        <a href="index.html#contact" class="hover:text-white">Contact Us</a>
+      </div>
+    </nav>
+    <!-- Disclaimer Bar -->
+    <div class="bg-yellow-200 text-sm text-gray-900 text-center py-2 px-4">
+      Disclaimer: This website is for informational purposes only and is not a medical diagnosis. Please consult a healthcare professional for concerns about autism.
+    </div>
+  </header>
+
+  <main class="flex justify-center items-center py-10 px-4">
+    <div class="result-box w-full max-w-xl text-center">
+      <h1 class="text-3xl font-bold mb-6 text-purple-800">Screening Result</h1>
+      <div id="result" class="text-xl text-gray-800 font-semibold mb-6">Loading result...</div>
+      <div id="result-details" class="text-gray-700 mb-4 hidden"></div>
+
+      <div id="precision-section" class="text-center mb-4 hidden">
+        <button onclick="goToPrecision()" class="bg-yellow-600 text-white py-2 px-6 rounded hover:bg-yellow-700 font-semibold">
+          More Precision
+        </button>
+      </div>
+
+      <div id="dashboard-section" class="text-center mb-4 hidden">
+        <a href="dashboard.html" class="bg-purple-700 text-white py-2 px-6 rounded hover:bg-purple-800 font-semibold">
+          View Detailed Dashboard
+        </a>
+      </div>
+
+      <div class="flex justify-center space-x-4 mt-4">
+        <a href="screening.html" class="bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700">Back to Screening</a>
+        <a href="index.html" class="bg-green-600 text-white py-2 px-4 rounded hover:bg-green-700">Home</a>
+      </div>
+    </div>
+  </main>
+
+  <footer class="bg-gray-900 text-white py-6 px-6 text-center text-sm">
+    <div class="max-w-7xl mx-auto">
+      <p class="mb-2">Quick Links:
+        <a href="index.html" class="text-gray-400 hover:text-white mx-1">Home</a> |
+        <a href="#resources" class="text-gray-400 hover:text-white mx-1">Resources</a>
+      </p>
+      <p>Email: <a href="mailto:trixietriesit247@gmail.com" class="hover:text-white underline">support@autismcarehub.com</a></p>
+      <p class="italic mt-2">"Every child deserves to be seen, heard, and supported."</p>
+      <p class="text-gray-500 mt-1">&copy; 2025 Autism Care Hub</p>
+    </div>
+  </footer>
+
+  <script>
+    const resultDiv = document.getElementById("result");
+    const resultDetailsDiv = document.getElementById("result-details");
+    const precisionDiv = document.getElementById("precision-section");
+    const dashboardDiv = document.getElementById("dashboard-section");
+
+    function calculateResult(answers) {
+      const yesCount = answers.filter(ans => ans === "yes").length;
+      const totalQuestions = answers.length;
+
+      if (totalQuestions < 10) {
+        return { message: "Not enough answers to provide a result.", showPrecision: false, showDashboard: false };
+      } else if (totalQuestions >= 10 && totalQuestions < 40) {
+        if (yesCount >= 7) {
+          return { message: "Preliminary Result: Possible signs of Autism.", showPrecision: true, showDashboard: false };
+        } else {
+          return { message: "Preliminary Result: No significant signs of Autism detected.", showPrecision: true, showDashboard: false };
+        }
+      } else { 
+        const percentageScore = (yesCount / totalQuestions) * 200;
+        let level = "Normal";
+        if (percentageScore >= 70 && percentageScore <= 106) level = "Mild Autism";
+        else if (percentageScore > 106 && percentageScore <= 153) level = "Moderate Autism";
+        else if (percentageScore > 153) level = "Severe Autism";
+        return { message: `Comprehensive Result: <strong>${level}</strong>`, details: `Score: ${Math.round(percentageScore)} / 200`, showPrecision: false, showDashboard: true };
+      }
+    }
+
+    function goToPrecision() {
+      window.location.href = "precision.html";
+    }
+
+    const storedAnswers = JSON.parse(localStorage.getItem("allAnswers")) || JSON.parse(localStorage.getItem("initial_answers")) || [];
+    const result = calculateResult(storedAnswers);
+
+    resultDiv.innerHTML = result.message;
+    if (result.details) {
+      resultDetailsDiv.innerHTML = result.details;
+      resultDetailsDiv.classList.remove("hidden");
+    } else {
+      resultDetailsDiv.classList.add("hidden");
+    }
+
+    if (result.showPrecision) {
+      precisionDiv.classList.remove("hidden");
+    } else {
+      precisionDiv.classList.add("hidden");
+    }
+
+    if (result.showDashboard) {
+      dashboardDiv.classList.remove("hidden");
+    } else {
+      dashboardDiv.classList.add("hidden");
+    }
+
+  </script>
+</body>
+</html>
